@@ -17,6 +17,7 @@ function CardGame({score, setScore, highScore, setHighScore}) {
   const [imgUrls, setImgUrls] = useState([]); // Initialize imgUrl state to null
   const [pokedex, setPokedex] = useState(pokedexInitial); // Array of Pokemon names
   const [selectedList, setSelectedList] = useState([]); // Array to store selected Pokemon names
+  const [gameOver, setGameOver] = useState(false); // State to track game over status
 
   useEffect(() => {
     let isMounted = true; // Track if the component is mounted
@@ -50,26 +51,38 @@ function CardGame({score, setScore, highScore, setHighScore}) {
     if(selectedList === null) {
       setSelectedList([pokemonName]);
       setScore(score + 1);
-      console.log(`${pokemonName} selected`);
     }
     else if(selectedList.find((name) => name === pokemonName)) {
-      console.log('Already selected - game over');
       if(score > highScore) {
         setHighScore(score);
       }
-      setScore(0);
-      setSelectedList([]);
+      setGameOver(true);
     }
     else {
       setSelectedList((prevSelectedList) => [...prevSelectedList, pokemonName]);
-      console.log('Pokemon selected:', pokemonName);
       setScore(score + 1);
     }
     setPokedex(shuffle(pokedex));
   }
 
+  function resetGame() {
+    setScore(0);
+    setSelectedList([]);
+    setGameOver(false);
+  }
+
   return (
     <>
+      {gameOver && (
+        <div className="overlay">
+          <div className="game-over">
+            <h2>Game Over!</h2>
+            <p>Your score: {score}</p>
+            <button onClick={resetGame}>Play Again</button>
+          </div>
+        </div>
+      )}
+
       <div className="card-container">
         {pokedex.map((pokemon) => ( // Conditionally render the image only when imgUrl is available
           <div key={pokemon} className="card">
@@ -83,7 +96,6 @@ function CardGame({score, setScore, highScore, setHighScore}) {
           </div>
           ))}
       </div>
-      {/* <button className="btn" onClick={() =>setPokedex(shuffle(pokedex))}>Reset</button> */}
     </>
   );
 }
