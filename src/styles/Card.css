@@ -4,6 +4,8 @@
     width: 200px;
     height: 250px;
     background: greenyellow;
+    border: #39AC39 1px solid;
+    padding: 1rem;
 }
 
 .pokemon-image {
@@ -20,4 +22,14 @@
     width: 100%;
     height: 100%;
     gap: 1rem;
+}
+
+.card p {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #000;
+    text-align: center;
+    margin: 0;
+    border-top: #39AC39 1px solid;
+    padding-top: 1rem;
 }

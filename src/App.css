@@ -3,22 +3,28 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  background-color:#C5EE7B;
 }
 
 header {
   display: flex;
-  background-color: aquamarine;
+  justify-content: space-around;
+  background-color: C5EE7B;
+  border: #628b04 1rem solid;
 }
 
 #scoreboard {
   display: flex;
   flex-direction: column;
   background: rgb(208, 106, 23);
+  border: #628b04 1px solid;
+  margin: 0.5rem;
 }
 
 .score {
   padding: 1em;
-  background-color:burlywood
+  background-color:burlywood;
+  border: #628b04 1px solid;
 }
 
 .instructions {
@@ -26,9 +32,9 @@ header {
 }
 
 h1 {
-  background-color: #888;
   font-size: 3em;
   /* line-height: 1.1; */
   align-self: center;
   margin: 0;
+  color: #628b04;
 }

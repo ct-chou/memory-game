@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './App.css'
-import Card from './components/Card.jsx'
+import CardGame from './components/Card.jsx'
 
 function App() {
   const [score, setScore] = useState(0);
@@ -24,7 +24,7 @@ function App() {
       <p className="instructions">
         Select a card to earn points. If you select a card that has already been selected, you lose. 
       </p>
-      <Card></Card>
+      <CardGame></CardGame>
     </>
   )
 }

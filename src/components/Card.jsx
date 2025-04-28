@@ -1,10 +1,22 @@
 import { useState, useEffect } from 'react';
 import '../styles/Card.css';
 
-const pokedex = [ 'eevee', 'snorlax', 'pikachu', 'mew', 'charizard', 'bulbasaur', 'squirtle', 'jigglypuff', 'cubone', 'charmander']; // Array of Pokemon names
+const pokedexInitial = [ 'eevee', 'snorlax', 'pikachu', 'mew', 'charizard', 'bulbasaur', 'squirtle', 'jigglypuff', 'cubone', 'charmander'];
 
-function Card() {
+function shuffle(array) {
+  const shuffledArray = [...array]; // Create a copy of the array to avoid mutating the original
+  for (let i = shuffledArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+  }
+  return shuffledArray;
+}
+
+
+function CardGame() {
   const [imgUrls, setImgUrls] = useState([]); // Initialize imgUrl state to null
+  const [pokedex, setPokedex] = useState(pokedexInitial); // Array of Pokemon names
+  const [selectedList, setSelectedList] = useState([]); // Array to store selected Pokemon names
 
   useEffect(() => {
     let isMounted = true; // Track if the component is mounted
@@ -19,7 +31,7 @@ function Card() {
         ]);
       }
     }
-    pokedex.forEach(namePokemon => {
+    pokedexInitial.forEach(namePokemon => {
       catchPokemon(namePokemon);
     });
 
@@ -28,20 +40,44 @@ function Card() {
     };
 
   }, []);
+
+  function getPokemonUrl(name) {
+    const pokemonUrl = imgUrls.find(pokemon => pokemon.name === name);
+    return pokemonUrl ? pokemonUrl.imgUrl : null;
+  }
   
-  console.log(imgUrls); // Log the imgUrls to see the fetched data
+  function selectImage(pokemonName) {
+    if(selectedList === null) {
+      setSelectedList([pokemonName]);
+      console.log(`${pokemonName} selected`);
+    }
+    else if(selectedList.find((name) => name === pokemonName)) {
+      console.log('Already selected - game over');
+    }
+    else {
+      setSelectedList((prevSelectedList) => [...prevSelectedList, pokemonName]);
+      console.log('Pokemon selected:', pokemonName);
+    }
+  }
 
   return (
-    <div className="card-container">
-      {imgUrls.map((pokemon) => ( // Conditionally render the image only when imgUrl is available
-        <div key={pokemon.name} className="card">
-          <img src={pokemon.imgUrl} alt="Pokemon" className='pokemon-image'/>
-          <p>{pokemon.name}</p>
-        </div>
-        ))}
-    </div>
-    
+    <>
+      <div className="card-container">
+        {pokedex.map((pokemon) => ( // Conditionally render the image only when imgUrl is available
+          <div key={pokemon} className="card">
+            <img 
+              src={getPokemonUrl(pokemon)} 
+              alt="Pokemon" 
+              className='pokemon-image'
+              onClick = {() => selectImage(pokemon)} // Call selectImage with the pokemon name
+              />
+            <p>{pokemon}</p>
+          </div>
+          ))}
+      </div>
+      <button className="btn" onClick={() =>setPokedex(shuffle(pokedex))}>Reset</button>
+    </>
   );
 }
 
-export default Card;
+export default CardGame;
