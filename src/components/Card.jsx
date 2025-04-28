@@ -13,7 +13,7 @@ function shuffle(array) {
 }
 
 
-function CardGame() {
+function CardGame({score, setScore, highScore, setHighScore}) {
   const [imgUrls, setImgUrls] = useState([]); // Initialize imgUrl state to null
   const [pokedex, setPokedex] = useState(pokedexInitial); // Array of Pokemon names
   const [selectedList, setSelectedList] = useState([]); // Array to store selected Pokemon names
@@ -49,15 +49,23 @@ function CardGame() {
   function selectImage(pokemonName) {
     if(selectedList === null) {
       setSelectedList([pokemonName]);
+      setScore(score + 1);
       console.log(`${pokemonName} selected`);
     }
     else if(selectedList.find((name) => name === pokemonName)) {
       console.log('Already selected - game over');
+      if(score > highScore) {
+        setHighScore(score);
+      }
+      setScore(0);
+      setSelectedList([]);
     }
     else {
       setSelectedList((prevSelectedList) => [...prevSelectedList, pokemonName]);
       console.log('Pokemon selected:', pokemonName);
+      setScore(score + 1);
     }
+    setPokedex(shuffle(pokedex));
   }
 
   return (
@@ -75,7 +83,7 @@ function CardGame() {
           </div>
           ))}
       </div>
-      <button className="btn" onClick={() =>setPokedex(shuffle(pokedex))}>Reset</button>
+      {/* <button className="btn" onClick={() =>setPokedex(shuffle(pokedex))}>Reset</button> */}
     </>
   );
 }

@@ -1,3 +1,11 @@
+body {
+  font-family: 'Courier New', Courier, monospace;
+  background-color: #C5EE7B;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -36,5 +44,5 @@ h1 {
   /* line-height: 1.1; */
   align-self: center;
   margin: 0;
-  color: #628b04;
+  color: black;
 }

@@ -4,7 +4,7 @@ import CardGame from './components/Card.jsx'
 
 function App() {
   const [score, setScore] = useState(0);
-  // const [highScore, setHighScore] = useState(0);
+  const [highScore, setHighScore] = useState(0);
 
 
   return (
@@ -16,7 +16,7 @@ function App() {
               Current score is {score}
           </div>
           <div className="score">
-              High score is {score}
+              High score is {highScore}
           </div>
         </div>
       </header>
@@ -24,7 +24,14 @@ function App() {
       <p className="instructions">
         Select a card to earn points. If you select a card that has already been selected, you lose. 
       </p>
-      <CardGame></CardGame>
+      <CardGame 
+        score={score} 
+        setScore={setScore} 
+        highScore={highScore}
+        setHighScore={setHighScore}
+      >
+
+      </CardGame>
     </>
   )
 }
